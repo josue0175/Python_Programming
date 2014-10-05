@@ -1,0 +1,70 @@
+http://smartic.us/2009/04/06/code-folding-in-vim/
+
+Folding settings (vimrc):
+-----------------------
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
+* za - fold a method
+* zr - unfold a method
+* zM - fold everything
+* zR - unfold everything
+* zm,zr - get things right
+* help:folding
+
+Buffers (vimrc)
+---------------
+(bind keys to use Ctrl + (jklh) for movement within buffers)
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
+
+Vertical Split : Ctrl+w + v
+Horizontal Split: Ctrl+w + s
+Close current windows: Ctrl+w + q
+
+TaskLists
+----------
+#1)
+*Add TODO to your code then do...
+
+:vimgrep TODO **/*.py
+Then open the quickfix window with:
+:cw
+
+#2)
+Assuming you use ctags to generate your tags file, add the following to
+~/.ctags:
+
+--regex-java=/\/\/TODO(.*)/todo\1/
+
+This will cause ctags to create tags for the following code:
+
+//TODO djh fix this horrible hack
+//TODO djh comment this
+
+with names:
+
+todo djh fix this horrible hack
+todo djh comment this
+
+You can then add the following to vimrc to create a command that easily lists
+these.
+
+command TODO tselect /^todo djh
+
+PythonIndentation
+===============
+http://www.vim.org/scripts/script.php?script_id=974
+
+Checker Utilities and Debugging
+------------------------------
+http://dancingpenguinsoflight.com/2009/02/python-and-vim-make-your-own-ide/
+#Install pep8 and pyflakes plugins
+
+:!pep8 %
+:!pyflakes %

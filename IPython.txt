@@ -1,0 +1,8 @@
+Start IPython 'ipython kernel'
+In vim do 'IPython --existing kernel-xxxxx.json'
+
+Create the filename 'w blah.py'
+import os
+print 'hello ipython'
+
+#move cursor to line and press <F5>
