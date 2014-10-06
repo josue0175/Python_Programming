@@ -1,0 +1,28 @@
+I. Sizing a Physical SYMM
+a. Start DB size
+b. for(0 to 60); do create 1000 devices; record symap_db.bin size
+
+
+II. Sizing 2 Virtual SYMM's (VSA)
+A. Environment
+*. Setup SP Base config for varialbe serial no SYMM
+*. 194900001 194900002
+*. Suse 11SP2 
+*. 112 devices per SYMM (TDEV & TDAT)
+
+
+B. Experiment
+1. Start DB size
+2. for(0 to 60); do create 1000 devices; record symap_db.bin size
+
+B. Given 2 variables (#devices,size) predict size Y at X no. of devices?
+Predict size of database (dependent variable) given # of devices (independent variable)
+
+**Use linear regression and linear extrapolation
+http://stattrek.com/regression/regression-example.aspx
+http://en.wikipedia.org/wiki/Extrapolation
+
+Location of bin file on Linux:
+/var/symapi/db/symapi_db.bin
+
+III. 
