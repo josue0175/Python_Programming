@@ -1,0 +1,43 @@
+--- celeryTasks.py      2018-10-25 09:53:08.103153188 -0600
++++ celeryTasks.py.new  2018-10-25 09:53:42.782387058 -0600
+@@ -196,8 +196,13 @@
+                 tempentryDict = dict()
+                 powerentryDict = dict()
++                save_dict = d
+                 if isinstance(d,dict):
+                     for val in info_list_params:
++                        if val == "Boot" and d["UUID"] == "4c4c4544-0038-5110-8034-c7c04f485132":
++                            logCelery.info("Josh: Found Boot")
++                            logCelery.info("dict d={}".format(d))
++
+                         if val in d and d[val] is not None:
+                             sysentryDict[val] = d[val]
+                             # logCelery.info(d[val])
+@@ -205,13 +210,24 @@
+                             logCelery.debug(" Value %s cannot be found in the response dict." % (val))
+                             sysentryDict[val] = None
+
++                #gets the entry for hash with sysid
+                 rc,msg,d = self.rdt.getHashDbEntry("SystemsMonHashDb",sysid)
+                 if isinstance(d,dict):
+-                    sysentryDict.update(d)
+-                    sysentryDict["hwmonstate"] = 2
+-                    sysentryDict["updateTime"] = str(datetime.datetime.utcnow())
+-                    sysentryDict["lastResponseTime"] = self.rft.elapsed
+-                    rc,msg = self.rdt.setHashDbEntry("SystemsMonHashDb",sysid,sysentryDict)
++                    hashdb=d
++                    hashdb.update(sysentryDict)
++                    hashdb["hwmonstate"] = 2
++                    hashdb["updateTime"] = str(datetime.datetime.utcnow())
++                    hashdb["lastResponseTime"] = self.rft.elapsed
++                    rc,msg = self.rdt.setHashDbEntry("SystemsMonHashDb",sysid,hashdb)
++#                    sysentryDict.update(d)
++#                    sysentryDict["hwmonstate"] = 2
++#                    sysentryDict["updateTime"] = str(datetime.datetime.utcnow())
++#                    sysentryDict["lastResponseTime"] = self.rft.elapsed
++#                    rc,msg = self.rdt.setHashDbEntry("SystemsMonHashDb",sysid,sysentryDict)
++                    if save_dict["UUID"] == "4c4c4544-0038-5110-8034-c7c04f485132":
++                        logCelery.info("Josh: sysentryDict and hashdb")
++                        logCelery.info("dict sysentryDict={}".format(sysentryDict))
++                        logCelery.info("dict hashdb={}".format(hashdb))
+                     # logCelery.info(msg)
